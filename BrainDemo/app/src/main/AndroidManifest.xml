@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.muru.margus.activitydemo">
+    package="com.muru.margus.braindemo">
 
     <application
         android:allowBackup="true"
@@ -9,22 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
 
-        </activity>
-        <activity
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"
-            android:name=".SpalshActivity">
+        <receiver android:name=".TimeReceiver">
+            <intent-filter>
+                <action android:name="com.muru.margus.timeRequest"/>
+            </intent-filter>
+        </receiver>
+
+        <!--<activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>-->
 
-        <service android:name=".BackgroundService" />
     </application>
 
 </manifest>
