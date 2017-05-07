@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by margu on 27/04/2017.
+ * Created by Margus Muru on 27/04/2017.
  */
 
 public class FragmentThree extends Fragment {
