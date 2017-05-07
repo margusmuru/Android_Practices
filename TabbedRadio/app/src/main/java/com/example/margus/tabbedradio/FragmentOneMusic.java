@@ -60,8 +60,11 @@ public class FragmentOneMusic extends Fragment implements SeekBar.OnSeekBarChang
         Log.v(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_one_music, container, false);
 
-        streamNames = ((MainActivity) getActivity()).GetStationNames();
-        streamSources = ((MainActivity) getActivity()).GetStationSources();
+        SettingsRepository repo = new SettingsRepository(getActivity());
+        //streamNames = ((MainActivity) getActivity()).GetStationNames();
+        streamNames = repo.GetStationNames();
+        //streamSources = ((MainActivity) getActivity()).GetStationSources();
+        streamSources = repo.GetStationSources();
 
         //setup spinner dropdown and its data source
         nSpinnerStreamSource = (Spinner) view.findViewById(R.id.spinnerStreamSource);

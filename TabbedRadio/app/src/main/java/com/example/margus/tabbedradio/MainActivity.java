@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    //could be removed if music view would use List<String> instead of String[].
+    /*
+        //could be removed if music view would use List<String> instead of String[].
     // Didnt change that just in case!
     public String[] GetStationNames(){
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
     }
 
-
+*/
 
     public int getmMusicPlayerStatus(){
         return mMusicPlayerStatus;

@@ -45,8 +45,11 @@ public class FragmentThree extends Fragment {
         Log.v(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_three, container, false);
 
-        streamNames = ((MainActivity) getActivity()).GetStationNamesAsList();
-        streamSources = ((MainActivity) getActivity()).GetStationSourcesAsList();
+        SettingsRepository repo = new SettingsRepository(getActivity());
+        //streamNames = ((MainActivity) getActivity()).GetStationNames();
+        streamNames = repo.GetStationNamesAsList();
+        //streamSources = ((MainActivity) getActivity()).GetStationSources();
+        streamSources = repo.GetStationSourcesAsList();
 
         mEditTextStationName = (EditText) view.findViewById(R.id.editTextStationName);
         mEditTextStationSource = (EditText) view.findViewById(R.id.editTextStationSource);
@@ -151,8 +154,9 @@ public class FragmentThree extends Fragment {
     }
 
     private void saveData(){
-        ((MainActivity) getActivity()).SaveStationData(streamNames, getString(R.string.save_station_names));
-        ((MainActivity) getActivity()).SaveStationData(streamSources, getString(R.string.save_station_urls));
+        SettingsRepository repo = new SettingsRepository(getActivity());
+        repo.SaveStationData(streamNames, getString(R.string.save_station_names));
+        repo.SaveStationData(streamSources, getString(R.string.save_station_urls));
     }
 
     @Override
