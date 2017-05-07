@@ -3,9 +3,68 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello from THREE" />
+    <Spinner
+        android:layout_marginTop="10dp"
+        android:id="@+id/spinnerEditSources"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/editTextStationName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/editTextStationSource"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+    <android.support.percent.PercentRelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        >
+
+        <Button
+            android:id="@+id/btnRemove"
+            android:enabled="true"
+            app:layout_widthPercent="33%"
+            app:layout_heightPercent="20%"
+            android:text="@string/btnRemove"/>
+
+        <Button
+            android:id="@+id/btnUpdate"
+            android:enabled="true"
+            app:layout_widthPercent="33%"
+            app:layout_heightPercent="20%"
+            android:text="@string/btnUpdate"
+            android:layout_toRightOf="@id/btnRemove"/>
+
+        <Button
+            android:id="@+id/btnAddNew"
+            android:enabled="true"
+            app:layout_widthPercent="33%"
+            app:layout_heightPercent="20%"
+            android:text="@string/btnAddNew"
+            android:layout_toRightOf="@id/btnUpdate"/>
+
+        <Button
+            android:id="@+id/btnReset"
+            android:enabled="true"
+            app:layout_widthPercent="33%"
+            app:layout_heightPercent="20%"
+            android:text="@string/btnReset"
+            android:layout_below="@id/btnRemove"/>
+        </android.support.percent.PercentRelativeLayout>
 </LinearLayout>

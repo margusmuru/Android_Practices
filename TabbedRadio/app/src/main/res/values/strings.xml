@@ -9,4 +9,14 @@
     <string name="player_title">Unknown Title</string>
 
     <string name="player_button_play">Play</string>
+
+    <string name="save_station_names">StationNames</string>
+    <string name="save_station_names_default">"SkyPlus","Energy"</string>
+    <string name="save_station_urls">StationUrls</string>
+    <string name="save_station_urls_default">http://sky.babahhcdn.com/SKYPLUS,http://sky.babahhcdn.com/NRJ</string>
+
+    <string name="btnRemove">Remove</string>
+    <string name="btnUpdate">Update</string>
+    <string name="btnAddNew">Add New</string>
+    <string name="btnReset">Reset</string>
 </resources>

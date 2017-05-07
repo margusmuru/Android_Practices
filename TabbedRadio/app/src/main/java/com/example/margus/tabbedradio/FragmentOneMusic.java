@@ -28,10 +28,20 @@ public class FragmentOneMusic extends Fragment implements SeekBar.OnSeekBarChang
 
     private static final String TAG = FragmentOneMusic.class.getSimpleName();
 
-    private static final String[] streamSources = {
+    private static String[] streamNames;
+    /*
+    = {
+            "SkyPlus",
+            "Energy"
+    };
+    */
+    private static String[] streamSources;
+    /*
+    = {
             "http://sky.babahhcdn.com/SKYPLUS",
             "http://sky.babahhcdn.com/NRJ"
     };
+    */
 
     private Spinner nSpinnerStreamSource;
     private Button mButtonPlayStop;
@@ -50,13 +60,16 @@ public class FragmentOneMusic extends Fragment implements SeekBar.OnSeekBarChang
         Log.v(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_one_music, container, false);
 
+        streamNames = ((MainActivity) getActivity()).GetStationNames();
+        streamSources = ((MainActivity) getActivity()).GetStationSources();
+
         //setup spinner dropdown and its data source
         nSpinnerStreamSource = (Spinner) view.findViewById(R.id.spinnerStreamSource);
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(
                         getContext(),
                         android.R.layout.simple_spinner_item,
-                        streamSources);
+                        streamNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         nSpinnerStreamSource.setAdapter(adapter);
 
@@ -66,7 +79,8 @@ public class FragmentOneMusic extends Fragment implements SeekBar.OnSeekBarChang
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         Log.d(TAG, "Stream Source OnItemSelectedListener " + (String)parent.getItemAtPosition(position));
-                        mSelectedStreamSource = (String)parent.getItemAtPosition(position);
+                        //mSelectedStreamSource = (String)parent.getItemAtPosition(position);
+                        mSelectedStreamSource = (String) streamSources[position];
                     }
 
                     @Override
@@ -133,6 +147,9 @@ public class FragmentOneMusic extends Fragment implements SeekBar.OnSeekBarChang
         mIntentFilter.addAction(C.INTENT_STREAM_VOLUME_CHANGED);
         mIntentFilter.addAction(C.INTENT_STREAM_INFO);
         mBroadcastReceiver = new BroadcastReceiverInFragmentOne();
+
+        //streamNames = ((MainActivity) getActivity()).GetStationNames();
+        //streamSources = ((MainActivity) getActivity()).GetStationSources();
     }
 
     @Override
@@ -145,6 +162,7 @@ public class FragmentOneMusic extends Fragment implements SeekBar.OnSeekBarChang
     public void onStart() {
         super.onStart();
         Log.v(TAG, "onStart");
+
     }
 
     @Override
@@ -167,6 +185,9 @@ public class FragmentOneMusic extends Fragment implements SeekBar.OnSeekBarChang
         LocalBroadcastManager
                 .getInstance(getContext())
                 .registerReceiver(mBroadcastReceiver, mIntentFilter);
+
+        //streamNames = ((MainActivity) getActivity()).GetStationNames();
+        //streamSources = ((MainActivity) getActivity()).GetStationSources();
     }
 
     @Override
