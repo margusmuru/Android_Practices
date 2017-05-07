@@ -12,6 +12,9 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Margus Muru on 07.05.2017.
@@ -32,6 +35,8 @@ public class MediaPlayerService extends Service implements
 
     private PhoneStateListener mPhoneStateListener;
     private TelephonyManager telephonyManager;
+
+    private ScheduledExecutorService mScheduledExecutorService;
 
     private boolean mMusicIsPausedInCall;
 
@@ -113,7 +118,6 @@ public class MediaPlayerService extends Service implements
         try {
             mMediaPlayer.setDataSource(mMediaSource);
             mMediaPlayer.prepareAsync();
-            //TODO update main UI, inform that we are buffering
             LocalBroadcastManager.getInstance(getApplicationContext())
                     .sendBroadcast(new Intent(C.INTENT_STREAM_STATUS_BUFFERING));
 
@@ -174,8 +178,29 @@ public class MediaPlayerService extends Service implements
         Log.d(TAG, "MediaPlayer OnPrepared");
 
         mMediaPlayer.start();
-        //TODO update UI, we are now playing music
         LocalBroadcastManager.getInstance(getApplicationContext())
                 .sendBroadcast(new Intent(C.INTENT_STREAM_STATUS_PLAYING));
+
+        startMediaInfoService();
     }
+
+    private void startMediaInfoService(){
+        mScheduledExecutorService = Executors.newScheduledThreadPool(5);
+
+        mScheduledExecutorService.scheduleAtFixedRate(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        //this will be executed at fixed rate
+                        Intent infoIntent = new Intent(C.INTENT_STREAM_STATUS_STOPPED);
+                        LocalBroadcastManager.getInstance(getApplicationContext())
+                                .sendBroadcast(new Intent(infoIntent));
+                    }
+                },
+                0, //initial delay
+                15, //execute interval
+                TimeUnit.SECONDS //time units
+        );
+    }
+
 }

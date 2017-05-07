@@ -16,6 +16,6 @@ public class C {
     public static final String INTENT_STREAM_STATUS_STOPPED = "com.example.margus.tabbedradio.intent.streamstatus.stopped";
     public static final String INTENT_STREAM_STATUS_PLAYING = "com.example.margus.tabbedradio.intent.streamstatus.playing";
 
-
+    public static final String INTENT_STREAM_VOLUME_CHANGED = "com.example.margus.tabbedradio.intent.volume.changed";
 
 }
