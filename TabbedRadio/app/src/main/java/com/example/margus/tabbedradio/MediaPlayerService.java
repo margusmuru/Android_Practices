@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -11,7 +12,16 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -192,15 +202,63 @@ public class MediaPlayerService extends Service implements
                     @Override
                     public void run() {
                         //this will be executed at fixed rate
-                        Intent infoIntent = new Intent(C.INTENT_STREAM_STATUS_STOPPED);
-                        LocalBroadcastManager.getInstance(getApplicationContext())
-                                .sendBroadcast(new Intent(infoIntent));
+                        new GetSongInfo().execute();
                     }
                 },
                 0, //initial delay
                 15, //execute interval
                 TimeUnit.SECONDS //time units
         );
+    }
+
+    private class GetSongInfo extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            String url = "http://dad.akaver.com/api/songtitles/SP";
+
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.GET,
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d(TAG, "onResponse: http get response: " + response);
+
+                            String artist = "";
+                            String title = "";
+
+                            try{
+                                JSONObject jsonObject = new JSONObject(response);
+                                JSONArray jsonArray = jsonObject.getJSONArray("SongHistoryList");
+                                JSONObject songInfoObject = jsonArray.getJSONObject(0);
+                                artist = songInfoObject.getString("Artist");
+                                title = songInfoObject.getString("Title");
+                            }catch (Exception e){
+                                Log.e(TAG, "onResponse: JSON", e);
+                            }
+
+                            Intent infoIntent = new Intent(C.INTENT_STREAM_INFO);
+                            infoIntent.putExtra(C.INTENT_STREAM_INFO_ARTIST, artist);
+                            infoIntent.putExtra(C.INTENT_STREAM_INFO_TITLE, title);
+                            LocalBroadcastManager.getInstance(getApplicationContext())
+                                    .sendBroadcast(new Intent(infoIntent));
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d(TAG, "onErrorResponse: http get failed: " + error.toString());
+                        }
+                    }
+            );
+
+            WebApiSingletonServiceHandler
+                    .getmInstance(getApplicationContext())
+                    .addToRequestQueue(stringRequest);
+
+            return null;
+        }
     }
 
 }

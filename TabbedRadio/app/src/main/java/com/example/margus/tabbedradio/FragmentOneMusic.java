@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 /**
  * Created by Margus Muru on 27/04/2017.
@@ -35,6 +36,8 @@ public class FragmentOneMusic extends Fragment implements SeekBar.OnSeekBarChang
     private Spinner nSpinnerStreamSource;
     private Button mButtonPlayStop;
     private String mSelectedStreamSource;
+    private TextView mTextViewArtist;
+    private TextView mTextViewTitle;
 
     private BroadcastReceiver mBroadcastReceiver;
     private IntentFilter mIntentFilter;
@@ -82,6 +85,9 @@ public class FragmentOneMusic extends Fragment implements SeekBar.OnSeekBarChang
         mSeekBarVolume.setProgress(currentVolume);
         mSeekBarVolume.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
 
+        mTextViewArtist = (TextView) view.findViewById(R.id.textViewArtist);
+        mTextViewTitle = (TextView) view.findViewById(R.id.textViewTitle);
+
         //setup PlayStop button
         mButtonPlayStop = (Button) view.findViewById(R.id.buttonPlayStop);
         mButtonPlayStop.setOnClickListener(new View.OnClickListener(){
@@ -125,6 +131,7 @@ public class FragmentOneMusic extends Fragment implements SeekBar.OnSeekBarChang
         mIntentFilter.addAction(C.INTENT_STREAM_STATUS_PLAYING);
         mIntentFilter.addAction(C.INTENT_STREAM_STATUS_STOPPED);
         mIntentFilter.addAction(C.INTENT_STREAM_VOLUME_CHANGED);
+        mIntentFilter.addAction(C.INTENT_STREAM_INFO);
         mBroadcastReceiver = new BroadcastReceiverInFragmentOne();
     }
 
@@ -213,16 +220,25 @@ public class FragmentOneMusic extends Fragment implements SeekBar.OnSeekBarChang
         public void onReceive(Context context, Intent intent) {
             switch (intent.getAction()){
                 case C.INTENT_STREAM_STATUS_BUFFERING:
-                    mButtonPlayStop.setText("Buffering...");
+                    mButtonPlayStop.setText(R.string.player_buffering);
                     break;
                 case C.INTENT_STREAM_STATUS_PLAYING:
-                    mButtonPlayStop.setText("Stop");
+                    mButtonPlayStop.setText(R.string.player_playing);
                     break;
                 case C.INTENT_STREAM_STATUS_STOPPED:
-                    mButtonPlayStop.setText("Play");
+                    mButtonPlayStop.setText(R.string.player_stopped);
                     break;
                 case C.INTENT_STREAM_VOLUME_CHANGED:
                     mSeekBarVolume.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+                    break;
+                case C.INTENT_STREAM_INFO:
+                    String artist = intent.getStringExtra(C.INTENT_STREAM_INFO_ARTIST);
+                    String title = intent.getStringExtra(C.INTENT_STREAM_INFO_TITLE);
+                    mTextViewArtist.setText(artist);
+                    mTextViewTitle.setText(title);
+                    break;
+                default:
+                    Log.d(TAG, "BroadcastReceiverInFragmentOne onReceive: unhandled intent" + intent.getAction());
                     break;
             }
         }

@@ -18,4 +18,8 @@ public class C {
 
     public static final String INTENT_STREAM_VOLUME_CHANGED = "com.example.margus.tabbedradio.intent.volume.changed";
 
+    public static final String INTENT_STREAM_INFO = "com.example.margus.tabbedradio.intent.media.info";
+    public static final String INTENT_STREAM_INFO_ARTIST = "com.example.margus.tabbedradio.intent.media.artist";
+    public static final String INTENT_STREAM_INFO_TITLE = "com.example.margus.tabbedradio.intent.media.title";
+
 }
