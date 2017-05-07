@@ -33,6 +33,7 @@ public class FragmentOneMusic extends Fragment {
     private Spinner nSpinnerStreamSource;
     private Button mButtonPlayStop;
     private String mSelectedStreamSource;
+
     private BroadcastReceiver mBroadcastReceiver;
     private IntentFilter mIntentFilter;
 
@@ -79,10 +80,21 @@ public class FragmentOneMusic extends Fragment {
 
                 //TODO check network connectivity
 
-                //start the music stream service
                 Intent serviceIntent = new Intent(getActivity(), MediaPlayerService.class);
-                serviceIntent.putExtra(C.INTENT_STREAM_SOURCE, mSelectedStreamSource);
-                getActivity().startService(serviceIntent);
+
+                switch (((MainActivity) getActivity()).getmMusicPlayerStatus()){
+                    case C.STREAM_STATUS_STOPPED:
+                        //start the music stream service
+                        serviceIntent.putExtra(C.INTENT_STREAM_SOURCE, mSelectedStreamSource);
+                        getActivity().startService(serviceIntent);
+                        break;
+                    case C.STREAM_STATUS_BUFFERING:
+                    case C.STREAM_STATUS_PLAYING:
+                        getActivity().stopService(serviceIntent);
+                        break;
+                }
+
+
             }
         });
 
@@ -120,7 +132,17 @@ public class FragmentOneMusic extends Fragment {
         super.onResume();
         Log.v(TAG, "onResume");
 
-        mButtonPlayStop.setText("Play");
+        switch (((MainActivity) getActivity()).getmMusicPlayerStatus()){
+            case C.STREAM_STATUS_BUFFERING:
+                mButtonPlayStop.setText(R.string.player_buffering);
+                break;
+            case C.STREAM_STATUS_PLAYING:
+                mButtonPlayStop.setText(R.string.player_playing);
+                break;
+            case C.STREAM_STATUS_STOPPED:
+                mButtonPlayStop.setText(R.string.player_stopped);
+                break;
+        }
         //start listening for local broadcasts
         LocalBroadcastManager
                 .getInstance(getContext())

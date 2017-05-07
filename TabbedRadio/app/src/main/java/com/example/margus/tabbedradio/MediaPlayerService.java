@@ -7,6 +7,8 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import java.io.IOException;
@@ -28,6 +30,10 @@ public class MediaPlayerService extends Service implements
     private MediaPlayer mMediaPlayer = new MediaPlayer();
     private String mMediaSource = "";
 
+    private PhoneStateListener mPhoneStateListener;
+    private TelephonyManager telephonyManager;
+
+    private boolean mMusicIsPausedInCall;
 
     @Override
     public void onCreate() {
@@ -56,6 +62,54 @@ public class MediaPlayerService extends Service implements
         mMediaSource = intent.getExtras().getString(C.INTENT_STREAM_SOURCE);
         Log.d(TAG, "onStartCommand: Media Source " + mMediaSource);
 
+        telephonyManager = (TelephonyManager) getSystemService(getBaseContext().TELEPHONY_SERVICE);
+        
+        mPhoneStateListener = new PhoneStateListener(){
+            @Override
+            public void onCallStateChanged(int state, String incomingNumber) {
+                //super.onCallStateChanged(state, incomingNumber);
+                Log.d(TAG, "onCallStateChanged: " + state);
+
+                switch (state){
+                    //waiting for a call/ call ended
+                    case TelephonyManager.CALL_STATE_IDLE:
+                        Log.d(TAG, "onCallStateChanged: IDLE");
+                        if(mMediaPlayer != null && mMusicIsPausedInCall){
+
+                            try {
+                                mMediaPlayer.reset();
+                                mMediaPlayer.setDataSource(mMediaSource);
+                                mMediaPlayer.prepareAsync();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        break;
+
+                    //call ongoing
+                    case TelephonyManager.CALL_STATE_OFFHOOK:
+                        Log.d(TAG, "onCallStateChanged: OFFHOOK");
+                        break;
+
+                    //incoming call
+                    case TelephonyManager.CALL_STATE_RINGING:
+                        Log.d(TAG, "onCallStateChanged: RINGING");
+                        if(mMediaPlayer != null){
+                            mMediaPlayer.stop();
+                            mMusicIsPausedInCall = true;
+                            LocalBroadcastManager.getInstance(getApplicationContext())
+                                    .sendBroadcast(new Intent(C.INTENT_STREAM_STATUS_STOPPED));
+                        }
+                        break;
+
+                    default:
+                        Log.d(TAG, "onCallStateChanged: UNKNOWN");
+                        break;
+                }
+            }
+        };
+        telephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+        
         try {
             mMediaPlayer.setDataSource(mMediaSource);
             mMediaPlayer.prepareAsync();
@@ -77,6 +131,26 @@ public class MediaPlayerService extends Service implements
     }
 
     //================================== MEDIAPLAYER callbacks ========================================================
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: Mediaplayer service");
+        if(mMediaPlayer != null){
+            mMediaPlayer.stop();
+            mMediaPlayer.reset();
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
+        if(mPhoneStateListener != null){
+            telephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
+        }
+
+        LocalBroadcastManager
+                .getInstance(getApplicationContext())
+                .sendBroadcast(new Intent(C.INTENT_STREAM_STATUS_STOPPED));
+    }
 
     @Override
     public void onCompletion(MediaPlayer mp) {

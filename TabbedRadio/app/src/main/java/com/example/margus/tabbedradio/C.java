@@ -6,6 +6,11 @@ package com.example.margus.tabbedradio;
  */
 
 public class C {
+
+    public static final int STREAM_STATUS_STOPPED = 0;
+    public static final int STREAM_STATUS_BUFFERING = 1;
+    public static final int STREAM_STATUS_PLAYING = 2;
+
     public static final String INTENT_STREAM_SOURCE = "com.example.margus.tabbedradio.intent.streamSource";
     public static final String INTENT_STREAM_STATUS_BUFFERING = "com.example.margus.tabbedradio.intent.streamstatus.bufferid";
     public static final String INTENT_STREAM_STATUS_STOPPED = "com.example.margus.tabbedradio.intent.streamstatus.stopped";
