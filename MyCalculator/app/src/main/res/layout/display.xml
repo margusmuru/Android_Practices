@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:text="@string/demoDisplay"
+        android:textAlignment="textEnd"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        style="@style/DisplayStyle"
+        android:id="@+id/textViewDisplay"
+        app:layout_widthPercent="100%"
+        />
+
+</android.support.percent.PercentRelativeLayout>

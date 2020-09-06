@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">MyCalculatorBrain</string>
+
+    <string name="btnMultiply">*</string>
+    <string name="btnDivide">/</string>
+    <string name="btnSubtract">-</string>
+    <string name="btnAdd">+</string>
+    <string name="btnDelete">C</string>
+    <string name="btnClear">CE</string>
+    <string name="btnOne">1</string>
+    <string name="btnTwo">2</string>
+    <string name="btnThree">3</string>
+    <string name="btnFour">4</string>
+    <string name="btnFive">5</string>
+    <string name="btnSix">6</string>
+    <string name="btnSeven">7</string>
+    <string name="btnEight">8</string>
+    <string name="btnNine">9</string>
+    <string name="btnZero">0</string>
+    <string name="btnComma">,</string>
+    <string name="btnResult">=</string>
+
+    <string name="btnInv">INV</string>
+    <string name="btnRad">RAD</string>
+    <string name="btnPercentage">%</string>
+    <string name="btnSin">Sin</string>
+    <string name="btnCos">Cos</string>
+    <string name="btnTan">Tan</string>
+    <string name="btnLn">Ln</string>
+    <string name="btnLog">Log</string>
+    <string name="btnAtt">!</string>
+    <string name="btnPi">π</string>
+    <string name="btnE">e</string>
+    <string name="btnUp">^</string>
+    <string name="btnStartBrac">(</string>
+    <string name="btnEndBrac">)</string>
+    <string name="btnSqrt">√</string>
+</resources>

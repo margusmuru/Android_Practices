@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnInv"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnInv"/>
+
+    <Button
+        android:id="@+id/btnRad"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnRad"
+        android:layout_alignTop="@id/btnInv"
+        android:layout_toRightOf="@id/btnInv"/>
+
+    <Button
+        android:id="@+id/btnPercentage"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnPercentage"
+        android:layout_alignTop="@id/btnRad"
+        android:layout_toRightOf="@id/btnRad"/>
+
+    <Button
+        android:id="@+id/btnSin"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnSin"
+        android:layout_below="@id/btnInv"/>
+
+    <Button
+        android:id="@+id/btnCos"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnCos"
+        android:layout_below="@id/btnRad"
+        android:layout_toRightOf="@id/btnInv"/>
+
+    <Button
+        android:id="@+id/btnTan"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnTan"
+        android:layout_below="@id/btnPercentage"
+        android:layout_toRightOf="@id/btnCos"/>
+
+    <Button
+        android:id="@+id/btnLn"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnLn"
+        android:layout_below="@id/btnSin" />
+
+    <Button
+        android:id="@+id/btnLog"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnLog"
+        android:layout_below="@id/btnCos"
+        android:layout_toRightOf="@id/btnLn"/>
+
+    <Button
+        android:id="@+id/btnAtt"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnAtt"
+        android:layout_below="@id/btnTan"
+        android:layout_toRightOf="@id/btnLog"/>
+
+    <Button
+        android:id="@+id/btnPi"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnPi"
+        android:layout_below="@id/btnLn" />
+
+    <Button
+        android:id="@+id/btnE"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnE"
+        android:layout_below="@id/btnLog"
+        android:layout_toRightOf="@id/btnPi"/>
+
+    <Button
+        android:id="@+id/btnUp"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnUp"
+        android:layout_below="@id/btnAtt"
+        android:layout_toRightOf="@id/btnE"/>
+
+    <Button
+        android:id="@+id/btnStartBrac"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnStartBrac"
+        android:layout_below="@id/btnPi" />
+
+    <Button
+        android:id="@+id/btnEndBrac"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnEndBrac"
+        android:layout_below="@id/btnE"
+        android:layout_toRightOf="@id/btnStartBrac"/>
+
+    <Button
+        android:id="@+id/btnSqrt"
+        android:enabled="true"
+        style="@style/BoardButton"
+        android:onClick="buttonClicked"
+        app:layout_widthPercent="33%"
+        app:layout_heightPercent="20%"
+        android:text="@string/btnSqrt"
+        android:layout_below="@id/btnUp"
+        android:layout_toRightOf="@id/btnEndBrac"/>
+</android.support.percent.PercentRelativeLayout>
